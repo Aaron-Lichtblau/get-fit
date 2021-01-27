@@ -9,9 +9,9 @@
   overflow-y: hidden;
 }
 
-.welcomeText{
+.welcomeText h2{
   text-align: center;
-  color: #E9E6C7;
+  color: #256EFF;
 }
 
 .App-logo {
@@ -53,11 +53,16 @@ img{
   text-align: center;
 }
 .imageCarousel p{
-  color: #256EFF;
+  color: white;
 }
 p{
   color:black;
+  text-align: center;
 }
 h2{
   color:#256EFF;
+  text-align: center;
+}
+h3{
+  color:#FF7307;
 }
