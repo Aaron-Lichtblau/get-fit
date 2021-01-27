@@ -13,7 +13,7 @@ ReactDOM.render(
     <BrowserRouter>
     {/* a bunch of navbar bs that looks cool*/}
     <div className="App">
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="light" variant="light" expand="lg">
       <Navbar.Brand as={Link} to="/">
         <img src={require("./pics/princeton.png").default}
           alt="Princeton"
