@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { About } from './About';
+import { Progress } from './Progress';
+import { Community } from './Community';
 import { Route, BrowserRouter, Switch, Link } from 'react-router-dom';
 import {Nav, Navbar, Form } from 'react-bootstrap';
 import reportWebVitals from './reportWebVitals';
@@ -27,7 +29,10 @@ ReactDOM.render(
         <Navbar.Collapse id="navbar">
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
+            <Nav.Link as={Link} to="/progress">Progress</Nav.Link>
+            <Nav.Link as={Link} to="/community">Community</Nav.Link>
             <Nav.Link as={Link} to="/about">About</Nav.Link>
+
           </Nav>
           <Form inline className="welcomeText">
           </Form>
@@ -39,6 +44,8 @@ ReactDOM.render(
       <div>
       <Switch>
         <Route exact path='/' component={App} />
+        <Route exact path='/progress' component={Progress} />
+        <Route exact path='/community' component={Community} />
         <Route exact path='/about' component={About} />
         <Route render={function () {return <p>Not found</p>}} />
       </Switch>
