@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { ChallengeModal } from './ChallengeModal';
-import {Container, Row, Col, Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import axios from "axios";
-import {Button, Form, Row, Col, Modal } from 'react-bootstrap';
+import {Button, Form, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin></script>
 
