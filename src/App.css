@@ -67,10 +67,16 @@ h3{
   color:#FF7307;
 }
 .challengeProgress{
-  height: 80vh;
+  height: 30vh;
+}
+.challengeProgress p {
+  color: #FF7307;
+}
+.challengeProgress h4 {
+  color: #FF7307;
 }
 .progressBar{
   width: calc(100% - 50px);
-  height: calc(100% - 100px);
+  height: calc(100% - 150px);
   box-sizing: border-box;
 }

@@ -58,6 +58,7 @@ class ChallengeModal extends React.Component {
 handleFileChange(event) {
   const target = event.target;
   const value = target.files[0];
+  console.log(this.state.challenge)
   console.log(value);
 
   this.setState({
@@ -90,7 +91,9 @@ handleCaptionChange(e) {
         width ="60"
         accept=".jpeg"
         onChange={this.handleFileChange}/>
-      <Form.Control type="text" name="caption" placeholder="Tell us about it..." value={this.state.caption} onChange={this.handleCaptionChange}/>
+      <Form.Group controlId="workoutCaption">
+        <Form.Control type="text" placeholder="Tell us about it..." value={this.state.caption} onChange={this.handleCaptionChange}/>
+      </Form.Group>
     </Modal.Body>
       <Modal.Footer>
         <Button

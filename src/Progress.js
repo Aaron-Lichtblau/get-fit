@@ -10,7 +10,11 @@ class ChallengeTable extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      challengeProgressStates: [{challenge: 'ChallengeName', description: 'ChalDesc', progress: 83}]
+      challengeProgressStates: [{challenge: 'Push Ups', description: 'do 100 pushups in 24 hours', progress: 0},
+      {challenge: '5k run', description: 'run 5 kilometers in 24 hours', progress: 25},
+      {challenge: 'Squats', description: 'do 80 squats in 24 hours', progress: 45},
+      {challenge: 'Yoga', description: 'do 45 minutes of yoga in 24 hours', progress: 83},
+      {challenge: 'Sprints', description: 'sprint 40 meters 10 times in 24 hours', progress: 55}]
     };
   }
   renderChallengeProgress(challengeProgress){
@@ -55,10 +59,10 @@ class ChallengeProgress extends React.Component {
   render(){
   return(
     <div className="challengeProgress">
-    <h4>{this.state.name}</h4>
+    <h4>{this.state.challenge}</h4>
     <p>{this.state.description}</p>
     <CircularProgressbar className="progressBar" value={this.state.progress} text={`${this.state.progress}%`}/>
-    <ChallengeModal updateState={(data) => this.updateState(data)}></ChallengeModal>
+    <ChallengeModal challenge= {this.state.challenge} updateState={(data) => this.updateState(data)}></ChallengeModal>
     </div>
   );
 }
