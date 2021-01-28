@@ -10,6 +10,8 @@ class ChallengeModal extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
+    this.handleCaptionChange = this.handleCaptionChange.bind(this);
     this.state = {
       challenge : props.challenge,
       file : '',

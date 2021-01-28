@@ -21,7 +21,7 @@ function About(props){
 
     <Container>
       <Row>
-      <h3> About Get Fit </h3>
+      <h3> About Motivate </h3>
       <br></br>
       <p> In quarantine, Ezra and Aaron were worried that they were getting smol when they needed to be swol.
       To fix this, they created a Challenging app to motivate themselves and others to workout.

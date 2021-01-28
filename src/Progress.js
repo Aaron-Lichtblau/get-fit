@@ -10,11 +10,10 @@ class ChallengeTable extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      challengeProgressStates: [{challenge: 'Push Ups', description: 'do 100 pushups in 24 hours', progress: 0},
-      {challenge: '5k run', description: 'run 5 kilometers in 24 hours', progress: 25},
-      {challenge: 'Squats', description: 'do 80 squats in 24 hours', progress: 45},
-      {challenge: 'Yoga', description: 'do 45 minutes of yoga in 24 hours', progress: 83},
-      {challenge: 'Sprints', description: 'sprint 40 meters 10 times in 24 hours', progress: 55}]
+      challenges: ['Push Ups', '5k run', 'Squats','Yoga', 'Sprints'],
+      descriptions: ['do 100 pushups in 24 hours','run 5 kilometers in 24 hours','do 80 squats in 24 hours',
+    'do 45 minutes of yoga in 24 hours','sprint 40 meters 10 times in 24 hours'],
+      progresses: [0, 0, 0, 0, 0]
     };
   }
   renderChallengeProgress(challengeProgress){
@@ -26,17 +25,21 @@ class ChallengeTable extends React.Component {
       </ChallengeProgress>
     );
   }
+  getChallengesContent(challenges) {
+    let content = [];
+    for (let i = 0; i < challenges.length; i++) {
+      const challenge = challenges[i];
+      const description = this.state.descriptions[i];
+      const progress = this.state.progresses[i];
+      const challengeProgress = {challenge: challenge, description: description, progress: progress};
+      content.push(<li>{this.renderChallengeProgress(challengeProgress)}</li>);
+    }
+    return content;
+  }
 
   render(){
     {/* challengeProgress : {name: ChallengeName, desc: ChalDesc, progress: PercentComplete} */}
-    return(
-      <ul>
-      {this.state.challengeProgressStates.map((item,index) => {
-        return <li key={index}>
-          {this.renderChallengeProgress(item)}
-        </li>})}
-      </ul>
-    );
+    return <ul>{this.getChallengesContent(this.state.challenges)}</ul>;
   }
 }
 
@@ -62,6 +65,7 @@ class ChallengeProgress extends React.Component {
     <h4>{this.state.challenge}</h4>
     <p>{this.state.description}</p>
     <CircularProgressbar className="progressBar" value={this.state.progress} text={`${this.state.progress}%`}/>
+    <br></br>
     <ChallengeModal challenge= {this.state.challenge} updateState={(data) => this.updateState(data)}></ChallengeModal>
     </div>
   );

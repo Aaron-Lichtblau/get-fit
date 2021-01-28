@@ -12,8 +12,8 @@ function App() {
         <Col></Col>
         <Col>
         <div className="welcomeText">
-        <h2>Name Goes Here</h2>
-        <p>tagline tagline tagline...</p>
+        <h2>Motivate</h2>
+        <p>Join Princeton students in exercise challenges to stay healthy while socially distancing</p>
         </div>
         </Col>
         <Col></Col>

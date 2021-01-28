@@ -32,7 +32,7 @@ ReactDOM.render(
             <Nav.Link as={Link} to="/progress">Progress</Nav.Link>
             <Nav.Link as={Link} to="/community">Community</Nav.Link>
             <Nav.Link as={Link} to="/about">About</Nav.Link>
-            <Nav.Link as={Link} to="/">Ezron</Nav.Link>
+            <Nav.Link>Username</Nav.Link>
 
           </Nav>
           <Form inline className="welcomeText">
