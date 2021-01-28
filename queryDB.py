@@ -157,4 +157,4 @@ def main():
     cursor.close()
     conn.close()
 
-main()
+# main()
