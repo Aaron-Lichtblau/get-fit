@@ -21,13 +21,17 @@ def taskNameToID(task):
 
 
 def selectProg(username, taskName):
-    print("in select")
+    print("selectProg()")
     userID = usernameToID(username)
     taskID = taskNameToID(taskName)
     query = ''' SELECT TASKS, PROG FROM USERS WHERE ID=?'''
     curs = cursor.execute(query, (userID,))
     tasks, prog = curs.fetchall()[0]
     print("tasks: " + tasks + " ; prog: " + prog)
+
+    cursor.close()
+    cursor = conn.cursor()
+
     tasklist = tasks.split(',')
     proglist = prog.split(',')
     print("tasklist: " + str(tasklist))
@@ -44,15 +48,24 @@ def selectProg(username, taskName):
     query = ''' SELECT LEN FROM TASKS WHERE ID=?'''
     total = cursor.execute(query, (taskID,)).fetchall()[0][0]
 
+    cursor.close()
+
     return int(100 * float(prog) / float(total))
 
 def updateProg(username, taskName):
+
+    print("updateProg()")
 
     userID = usernameToID(username)
     taskID = taskNameToID(taskName)
     query = ''' SELECT TASKS, PROG FROM USERS WHERE ID=?'''
     curs = cursor.execute(query, (userID,))
+
     tasks, prog = curs.fetchall()[0]
+
+    cursor.close()
+    cursor = conn.cursor()
+
     # (tasks, prog) = cursor.execute(query, userID)
     tasklist = tasks.split(',')
     proglist = prog.split(',')
@@ -80,8 +93,14 @@ def updateProg(username, taskName):
     query = ''' UPDATE USERS SET PROG=? WHERE ID=?'''
     cursor.execute(query, values)
 
+    cursor.close()
+    cursor = conn.cursor()
+
     query = ''' SELECT LEN FROM TASKS WHERE ID=?'''
     total = cursor.execute(query, (taskID,)).fetchall()[0][0]
+
+    cursor.close()
+
     
     
     conn.commit()
@@ -97,17 +116,29 @@ def convertToBinaryData(filename):
     return blobData
 
 def insertPhoto(image, cap, user):
+    print("insertPhoto()")
     
     query1 = ''' SELECT * FROM PHOTOS ORDER BY ID DESC LIMIT 1 '''
     lastID = cursor.execute(query1).fetchall()[0][0]
+
+    cursor.close()
+    cursor = conn.cursor()
+
     # print(lastID)
     values = (int(lastID)+1, image, cap, user)
     query2 = ''' INSERT INTO PHOTOS(ID,PHOTO,CAP,NAME) VALUES(?,?,?,?)'''
     cursor.execute(query2, values)
-    conn.commit()
+
+    cursor.close()
+    cursor = conn.cursor()
+
+    
 
     query3 = ''' SELECT CAP FROM PHOTOS WHERE ID=?''' 
     new_cap = cursor.execute(query3, (int(lastID)+1,)).fetchall()[0][0]
+
+    cursor.close()
+    conn.commit()
     
     return new_cap
 
