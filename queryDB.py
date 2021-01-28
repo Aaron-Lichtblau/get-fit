@@ -10,7 +10,7 @@ cursor = conn.cursor()
 
 def usernameToID(username):
     query = ''' SELECT ID FROM USERS WHERE NAME=?'''
-    id = cursor.execute(query, (username,)).fetchall()[0][0]
+    id = cursor.execute(query, (username,)).fetchall()
     print("id: " + str(id))
     return id
 
@@ -101,8 +101,8 @@ def updateProg(username, taskName):
 
     cursor.close()
 
-    
-    
+
+
     conn.commit()
     print(new_prog)
     print(total)
@@ -117,7 +117,7 @@ def convertToBinaryData(filename):
 
 def insertPhoto(image, cap, user):
     print("insertPhoto()")
-    
+
     query1 = ''' SELECT * FROM PHOTOS ORDER BY ID DESC LIMIT 1 '''
     lastID = cursor.execute(query1).fetchall()[0][0]
 
@@ -132,16 +132,27 @@ def insertPhoto(image, cap, user):
     cursor.close()
     cursor = conn.cursor()
 
-    
 
-    query3 = ''' SELECT CAP FROM PHOTOS WHERE ID=?''' 
+
+    query3 = ''' SELECT CAP FROM PHOTOS WHERE ID=?'''
     new_cap = cursor.execute(query3, (int(lastID)+1,)).fetchall()[0][0]
 
     cursor.close()
     conn.commit()
-    
+
     return new_cap
 
+def getLeaderBoard():
+    res = []
+    query = ''' SELECT NAME, SCORE FROM USERS ORDER BY SCORE DESC LIMIT 5'''
+    conn = sqlite3.connect('fit.db', check_same_thread=False)
+    cursor = conn.cursor()
+
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    for row in rows:
+        res.append(row)
+    return res
 
 
 def main():

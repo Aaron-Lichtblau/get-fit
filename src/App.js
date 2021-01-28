@@ -2,6 +2,8 @@ import './App.css';
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Container, Row, Col} from 'react-bootstrap';
+import { ChallengeBoard } from './ChallengeBoard';
+import { LeaderBoard } from './LeaderBoard';
 
 
 function App() {
@@ -31,9 +33,11 @@ function App() {
       <Row>
         <Col>
         <h3>Challenge Board</h3>
+        <ChallengeBoard></ChallengeBoard>
         </Col>
         <Col>
         <h3>Leader Board</h3>
+        <LeaderBoard></LeaderBoard>
         </Col>
       </Row>
     </Container>
