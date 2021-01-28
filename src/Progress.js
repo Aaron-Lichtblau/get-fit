@@ -39,11 +39,17 @@ class ChallengeTable extends React.Component {
 class ChallengeProgress extends React.Component {
   constructor(props){
     super(props);
+    this.updateState = this.updateState.bind(this);
     this.state = {
       challenge: props.challenge,
       description: props.description,
       progress: props.progress,
     };
+  }
+  updateState(data){
+    this.setState({
+      progress: data['progress'],
+    })
   }
 
   render(){
@@ -52,7 +58,7 @@ class ChallengeProgress extends React.Component {
     <h4>{this.state.name}</h4>
     <p>{this.state.description}</p>
     <CircularProgressbar className="progressBar" value={this.state.progress} text={`${this.state.progress}%`}/>
-    <ChallengeModal></ChallengeModal>
+    <ChallengeModal updateState={(data) => this.updateState(data)}></ChallengeModal>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import os
 from flask import Flask, jsonify, request, session
+import queryDB as query
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 
@@ -18,9 +19,13 @@ def update_ProgressDB():
     userName = session['user_name']
 
     # call function to UPDATE db Progress
-    # if file != '':
-        # call function to UPDATE db Photo, Caption
-    result = 'function call goes here'
+    query.updateProg(userName, challengeName)
+    if file != '':
+        # call function to UPDATE db Photo, Caption, username
+        newCap = query.insertPhoto(file, caption, userName)
+        result = {'new caption': newCap}
+    else:
+        result = {'new caption': ''}
     return(result)
 
 @app.route('/progressUpdated', methods=['GET'])

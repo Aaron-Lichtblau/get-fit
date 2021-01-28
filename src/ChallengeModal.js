@@ -14,7 +14,8 @@ class ChallengeModal extends React.Component {
       challenge : props.challenge,
       file : '',
       caption : '',
-      show: false
+      show: false,
+      updateState: props.updateState
     };
   }
   handleSubmit(){
@@ -29,8 +30,19 @@ class ChallengeModal extends React.Component {
         })
     self.setState({
       show: false
-    })
+    });
+
+    axios.get('/progressUpdated').then(
+      (response) => {
+          console.log(response.data);
+          self.updateState(response.data);
+        }
+          ,
+          (error) => {
+              self.setState({error})
+            })
     }
+
   handleClose(){
     var self = this;
     self.setState({
