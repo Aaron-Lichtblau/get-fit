@@ -38,8 +38,13 @@ def selectProg(username, taskName):
             print("taskID: " + str(taskID))
             prog = proglist[i]
 
-    print("prog: " + str(prog))
-    return prog
+
+    # print("prog: " + str(prog))
+
+    query = ''' SELECT LEN FROM TASKS WHERE ID=?'''
+    total = cursor.execute(query, (taskID,)).fetchall()[0][0]
+
+    return int(100 * float(prog) / float(total))
 
 def updateProg(username, taskName):
 
@@ -74,10 +79,15 @@ def updateProg(username, taskName):
     # WHERE employeeid = 3;
     query = ''' UPDATE USERS SET PROG=? WHERE ID=?'''
     cursor.execute(query, values)
+
+    query = ''' SELECT LEN FROM TASKS WHERE ID=?'''
+    total = cursor.execute(query, (taskID,)).fetchall()[0][0]
     
     
     conn.commit()
-    return new_prog
+    print(new_prog)
+    print(total)
+    return int(100* float(new_prog) / float(total))
 
 # https://pynative.com/python-sqlite-blob-insert-and-retrieve-digital-data/
 def convertToBinaryData(filename):
@@ -100,10 +110,10 @@ def insertPhoto(image, cap, user):
 
 def main():
     # print("in main")
-    # username = "ezra"
-    # taskName = "Yoga"
-    # print(updateProg(username, taskName))
-    # conn.commit()
+    username = "ezra"
+    taskName = "Yoga"
+    print(updateProg(username, taskName))
+    conn.commit()
     # conn.close()
 
     insertPhoto(convertToBinaryData('./pics/1.jpg'), 'had fun today', 'aaron')

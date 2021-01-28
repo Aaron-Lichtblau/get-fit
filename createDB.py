@@ -77,7 +77,7 @@ def fillDummy(conn, cursor):
     #    fill tasks table
     tasks = ['Pushups', '5K', 'Yoga', 'Squats', 'Sprints']
     descs = ['Do 100 pushups per day for 30 days', 'Run a 5K around campus or enjoy the scenes around town', 'Practice yoga at the intensity that feels right for you. Aim for a 30 or 60 minute session, once per day.', 'Squat Squat Squat', 'Sprint Sprint Sprint']
-    lens = [30,30,10,30,20]
+    lens = [30,30,50,30,20]
     ppl = [10, 19, 33, 4, 6]
 
     for i in range(5):
@@ -116,7 +116,7 @@ def main():
     vac(cTo, connTo)
 
     # # create table 
-    createTable(cTo)
+    # createTable(cTo)
 
     
 
