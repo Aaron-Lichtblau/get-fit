@@ -108,6 +108,7 @@ def insertPhoto(image, cap, user):
 
     query3 = ''' SELECT CAP FROM PHOTOS WHERE ID=?''' 
     new_cap = cursor.execute(query3, (int(lastID)+1,)).fetchall()[0][0]
+    
     return new_cap
 
 
@@ -122,6 +123,7 @@ def main():
 
     print(insertPhoto(convertToBinaryData('./pics/1.jpg'), 'had fun today', 'aaron'))
     conn.commit()
+    cursor.close()
     conn.close()
 
 main()
