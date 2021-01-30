@@ -1,7 +1,7 @@
 # Sets up db with Challenges User Photos tables
 
 import sqlite3
-# import urllib, json
+import json
 # import requests
 import pprint
 # https://www.geeksforgeeks.org/python-pil-image-show-method/
@@ -65,11 +65,13 @@ def fillDummy(conn, cursor):
     #    fill users table with dummy data
     names = ['aaron', 'ezra', 'cy', 'alan', 'bob']
     scores = [5, 31, 11, 16, 2]
-    taskIDs = ['0,1', '1,2', '0,1,2,3,4', '5', '2,3']
-    progs = ['5,2', '11,8', '1,4,5,1,10', '25', '3,6']
+    challenges = [['Pushups','5k'], ['5k','Yoga'], ['Pushups', '5k', 'Yoga', 'Squats', 'Sprints'], ['Squats'], ['Yoga', 'Squats']]
+    challengesJSON = [json.dumps(chalList) for chalList in challenges]
+    progs = [['5','20'], ['10','85'], ['10','40','50','15','90'], ['25'], ['30','65']]
+    progsJSON = [json.dumps(progList) for progList in progs]
 
     for i in range(5):
-        values = (i, names[i], scores[i], taskIDs[i], progs[i])
+        values = (i, names[i], scores[i], challengesJSON[i], progsJSON[i])
         query = '''INSERT INTO USERS(id,name,score,challenges,progresses)
                     VALUES (?,?,?,?,?)'''
         cursor.execute(query, values)
@@ -78,13 +80,14 @@ def fillDummy(conn, cursor):
     #    fill challenges table
     challenges = ['Pushups', '5K', 'Yoga', 'Squats', 'Sprints']
     descs = ['Do 100 pushups per day for 30 days', 'Run a 5K around campus or enjoy the scenes around town', 'Practice yoga at the intensity that feels right for you. Aim for a 30 or 60 minute session, once per day.', 'Squat Squat Squat', 'Sprint Sprint Sprint']
+    startDates = ['5/5', '4/30', '5/12', '2/12', '3/4']
     lengths = [30,30,50,30,20]
     userCounts = [10, 19, 33, 4, 6]
 
     for i in range(5):
-        values = (i, challenges[i], descs[i], lengths[i], userCounts[i])
-        query = '''INSERT INTO CHALLENGES(id,challenge,description,length,userCount)
-                    VALUES (?,?,?,?,?)'''
+        values = (i, challenges[i], descs[i], startDates[i], lengths[i], userCounts[i])
+        query = '''INSERT INTO CHALLENGES(id,challenge,description,startDate,length,userCount)
+                    VALUES (?,?,?,?,?,?)'''
         cursor.execute(query, values)
         conn.commit()
 

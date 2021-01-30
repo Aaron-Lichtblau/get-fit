@@ -27,14 +27,17 @@ class ChallengeModal extends React.Component {
       file: this.state.file,
       caption: this.state.caption
       }
-    axios.post('/addWorkout',data).then(res => { // then print response status
-          console.warn(res);
-        })
-    self.setState({
-      show: false
-    });
-
-    axios.get('/progressUpdated').then(
+    {// axios.post('/addWorkout',data).then(res => { // then print response status
+    //       console.warn(res);
+    //     })
+    // self.setState({
+    //   show: false
+    // });
+    }
+    axios.get('/progressUpdated', {
+      data: {
+        challengeName: self.state.challenge
+      }}).then(
       (response) => {
           console.log(response.data);
           self.updateState(response.data);

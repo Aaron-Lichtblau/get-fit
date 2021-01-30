@@ -1,4 +1,5 @@
 import os
+import ast
 from flask import Flask, jsonify, request, session
 from database import Database
 
@@ -21,11 +22,21 @@ def challengeListtoDict(challenge):
     length = challenge[3]
     userCount = challenge[4]
     res = {
-        'challenge': challengeName,
+        'challengeName': challengeName,
         'description': description,
         'startDate': startDate,
         'len': length,
         'userCount': userCount}
+    return res
+
+def progressListtoDict(progress):
+    # progList: [[challenge1, percent1], ...] ->
+    # progDict: {'challenges': [challenge1, ...] 'prog': [prog1, ...]}
+    print(progress)
+    challenges = ast.literal_eval(progress[0][0])
+    progresses = ast.literal_eval(progress[0][1])
+    res = {'challenges': challenges, 'progresses': progresses}
+    print(res)
     return res
 
 @app.route('/')
@@ -55,6 +66,30 @@ def displayChallenges():
     challengeDicts = [challengeListtoDict(challenge) for challenge in challenges]
     return jsonify(challengeDicts)
 
+@app.route('/progressboard', methods=['GET'])
+def displayProgress():
+    # [[user, score], ...]
+    database = Database()
+    database.connect()
+    username = session['user_name']
+    progresses = database.getProgressBoard(username)
+    database.disconnect()
+    progressDict = progressListtoDict(progresses)
+    return jsonify(progressDict)
+
+@app.route('/getdescriptions', methods=['POST'])
+def getDescriptions():
+    print('hi there aaron!')
+    challengeNames = request.get_json()['challengeNames']
+    print('getting descs for: ', challengeNames)
+    database = Database()
+    database.connect()
+    descriptions = database.getDescriptions(challengeNames) # [desc1, desc2, ...]
+    database.disconnect()
+    res = {'descriptions': descriptions}
+    return jsonify(res)
+
+
 # @app.route('/addWorkout', methods=['POST'])
 # def update_ProgressDB():
 #     data = request.get_json()
@@ -76,8 +111,10 @@ def displayChallenges():
 
 @app.route('/progressUpdated', methods=['GET'])
 def get_updatedProgress():
-    # call function to SELECT from db
-    newProgress = 'function call goes here'
+    data = request.get_json()
+    user = session['user_name']
+    challengeName = data['challengeName']
+    newProgress = database.selectProgress(user, challengeName)
     result = {'progress' : newProgress}
     return jsonify(result)
 #-------------------------------------------------------------------------------

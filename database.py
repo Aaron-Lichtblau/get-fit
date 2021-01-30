@@ -40,7 +40,6 @@ class Database:
         res = []
         query = ''' SELECT challenge,description,startDate,length,userCount FROM CHALLENGES '''
 
-        # conn = sqlite3.connect('fit.db', check_same_thread=False)
         cursor = self._connection.cursor()
 
         cursor.execute(query)
@@ -51,21 +50,59 @@ class Database:
 
         return res
 
-# 1. review what's in challenges table                                          DONE
-# 2. relabel to lowercase                                                       DONE
-# 3. rewrite getLeaderBoard                                                     DONE
-# 4. write getChallengeBoard                                                    DONE
-# 5. hook up challenge board to flask (app.py)                                  DONE
-# 6. hook up challenge board to react                                           DONE
-# 7. Repeat 4-6 with selectProg
-# 8. Repeat 4-6 with updateProg
-# 9. Get onclick of Start Challenge! buttons working
-# 10. Repeat 4-6 with addChallenge to user's personal challenges
-# 11. implement login?
+    def getProgressBoard(self, username):
 
-# remember to add startDates to Challenges table (createDB.py)
+        res = []
+        query = ''' SELECT challenges,progresses FROM USERS where name = ?'''
+
+        cursor = self._connection.cursor()
+
+        cursor.execute(query,(username,))
+        rows = cursor.fetchall()
+        for row in rows:
+            res.append(row)
+
+        cursor.close()
+
+        return res
 
 
+    def selectProgress(self, username, challengeName):
+
+        res = ''
+
+        query = ''' SELECT challenges, progresses FROM USERS WHERE name = ?'''
+
+        cursor = self._connection.cursor()
+
+        cursor.execute(query,(username,))
+        rows = cursor.fetchall()
+        for row in rows:
+            challenge = row[0]
+            progress = row[1]
+            if str(challenge) == str(challengeName):
+                res = progress
+
+        cursor.close()
+
+        return res
+
+    def getDescriptions(self, challengeNames):
+
+        res = []
+
+        query = ''' SELECT description FROM CHALLENGES WHERE IN ?'''
+
+        cursor = self._connection.cursor()
+
+        cursor.execute(query,(challengeNames,))
+        rows = cursor.fetchall()
+        for row in rows:
+            res.append(row[0]) #only one item in row (desc)
+
+        cursor.close()
+
+        return res
         # def updateProg(username, challenge):
 
             # get length of progress, current %

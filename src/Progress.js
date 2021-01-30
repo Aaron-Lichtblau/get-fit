@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import axios from "axios";
 import { ChallengeModal } from './ChallengeModal';
 import {Container, Row, Col} from 'react-bootstrap';
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -10,12 +11,45 @@ class ChallengeTable extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      challenges: ['Push Ups', '5k run', 'Squats','Yoga', 'Sprints'],
-      descriptions: ['do 100 pushups in 24 hours','run 5 kilometers in 24 hours','do 80 squats in 24 hours',
-    'do 45 minutes of yoga in 24 hours','sprint 40 meters 10 times in 24 hours'],
-      progresses: [0, 0, 0, 0, 0]
+      challenges: [],
+      descriptions: [],
+      progresses: []
     };
   }
+  componentDidMount(){
+    var self = this;
+    axios.get('/progressboard').then(
+      (response) => {
+          console.log(response.data);
+          self.setState({
+            challenges: response.data.challenges,
+            progresses: response.data.progresses
+          }
+          )
+        }
+          ,
+          (error) => {
+              self.setState({error})
+            })
+
+    console.log(self.state.challenges);
+    axios.post('/getdescriptions',{
+      data: {
+        challengeNames: self.state.challenges
+      }}).then(
+      (response) => {
+          console.log(response.data);
+          self.setState({
+            descriptions: response.data.descriptions
+          }
+          )
+        }
+          ,
+          (error) => {
+              self.setState({error})
+            })
+  }
+
   renderChallengeProgress(challengeProgress){
     return(
       <ChallengeProgress

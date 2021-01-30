@@ -31,7 +31,7 @@ class LeaderBoard extends React.Component {
   return(
       <ul>
             {this.state.leaders.map(item => (
-              <li>{item.name} ' : ' {item.score}</li>
+              <li>{item.name}  :  {item.score}</li>
             ))}
       </ul>
         )

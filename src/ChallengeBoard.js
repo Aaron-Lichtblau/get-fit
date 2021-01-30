@@ -28,35 +28,42 @@ class ChallengeBoard extends React.Component {
               self.setState({error})
             })
   }
-  handleSignUp(){
-    console.log('signed up');
+  handleSignUp(challengeName){
+    console.log('signed up to:');
+    console.log(challengeName);
+
+    // change active status
+    // add challenge/progress of 0 to unique users' table
+    // add +1 to participants of Challenges table 
   }
 
   renderChallengeBox(challengeBox){
+    console.log(challengeBox);
     var self = this;
     return(
       <ChallengeBox
-      challenge={challengeBox['challenge']}
+      challengeName={challengeBox['challengeName']}
       description={challengeBox['description']}
       startDate={challengeBox['startDate']}
       length={challengeBox['length']}
       userCount={challengeBox['userCount']}
-      handleSignUp={self.handleSignUp()}
+      handleSignUp={self.handleSignUp}
       active={challengeBox['active']}>
       </ChallengeBox>
     );
   }
   getChallengeBoxesContent(challenges) {
+    console.log(challenges);
     var self = this;
     let content = [];
     for (let i = 0; i < challenges.length; i++) {
       const challengeObject = challenges[i];
-      const challenge = challengeObject.challengeName;
+      const challengeName = challengeObject.challengeName;
       const startDate = challengeObject.startDate;
       const len = challengeObject.len;
       const userCount = challengeObject.userCount;
       const active = self.state.activeChallenges[i];
-      const challengeBox = {challenge: challenge, startDate: startDate, length: len, userCount: userCount, active: active};
+      const challengeBox = {challengeName: challengeName, startDate: startDate, length: len, userCount: userCount, active: active};
       content.push(<li>{this.renderChallengeBox(challengeBox)}</li>);
     }
     return content;
@@ -72,7 +79,7 @@ function SignUpButton(props){
   const color = (props.active) ? 'success': 'primary';
   console.log(props.handleSignUp);
   return (
-    <Button variant={color} onClick={props.handleSignUp}>{participationStatus}</Button>
+    <Button variant={color} onClick={() => props.handleSignUp(props.challengeName)}>{participationStatus}</Button>
   );
 }
 
@@ -83,19 +90,19 @@ function ChallengeBox(props){
     <br></br>
     <Container>
         <Col>
-        <h4>  {props.challenge}</h4>
+        <p>  {props.challengeName} Challenge</p>
         </Col>
         <Col>
-        <h4> {props.startDate} </h4>
+        <p> Started On: {props.startDate} </p>
         </Col>
         <Col>
-        <h4> {props.length} </h4>
+        <p> Workouts to Complete: {props.length} </p>
         </Col>
         <Col>
-        <h4> {props.userCount} </h4>
+        <p> Number of Participants: {props.userCount} </p>
         </Col>
         <Col>
-        <SignUpButton active={props.active} handleSignUp={props.handleSignUp}></SignUpButton>
+        <SignUpButton active={props.active} handleSignUp={props.handleSignUp} challengeName={props.challengeName}></SignUpButton>
         </Col>
     </Container>
     <br></br>
