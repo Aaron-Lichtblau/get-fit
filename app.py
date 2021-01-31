@@ -77,14 +77,15 @@ def displayProgress():
     progressDict = progressListtoDict(progresses)
     return jsonify(progressDict)
 
-@app.route('/getdescriptions', methods=['POST'])
+@app.route('/getdescriptions', methods=['GET','POST'])
 def getDescriptions():
-    print('hi there aaron!')
-    challengeNames = request.get_json()['challengeNames']
-    print('getting descs for: ', challengeNames)
+    print('at app route for get desc')
+    data = request.get_json()['challenges']
+    print(data)
+    print('getting descs for: ', data)
     database = Database()
     database.connect()
-    descriptions = database.getDescriptions(challengeNames) # [desc1, desc2, ...]
+    descriptions = database.getDescriptions(data) # [desc1, desc2, ...]
     database.disconnect()
     res = {'descriptions': descriptions}
     return jsonify(res)

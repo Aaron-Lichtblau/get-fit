@@ -18,37 +18,41 @@ class ChallengeTable extends React.Component {
   }
   componentDidMount(){
     var self = this;
-    axios.get('/progressboard').then(
-      (response) => {
-          console.log(response.data);
-          self.setState({
-            challenges: response.data.challenges,
-            progresses: response.data.progresses
-          }
-          )
-        }
-          ,
-          (error) => {
-              self.setState({error})
-            })
 
-    console.log(self.state.challenges);
-    axios.post('/getdescriptions',{
-      data: {
-        challengeNames: self.state.challenges
-      }}).then(
-      (response) => {
-          console.log(response.data);
-          self.setState({
-            descriptions: response.data.descriptions
-          }
-          )
+    const getChalProg = async () => {
+        try {
+              const res = await axios.get('/progressboard');
+              self.setState({
+                challenges: res.data.challenges,
+                progresses: res.data.progresses
+              });
         }
-          ,
-          (error) => {
-              self.setState({error})
-            })
+        catch (err) {
+          console.error(err);
+        }
+
+    }
+    getChalProg();
+
   }
+  // TO BE USED for info button on challenges (show description)
+  // const getDesc = async () => {
+  //   try {
+  //     console.log('ok until here');
+  //     const data = {
+  //         challenges: self.state.challenges
+  //       };
+  //     console.log(data);
+  //     console.log('about to post');
+  //     const res = await axios.post('/getdescriptions',data);
+  //     self.setState({
+  //       descriptions: res.data.descriptions
+  //     });
+  //   }
+  //   catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   renderChallengeProgress(challengeProgress){
     return(

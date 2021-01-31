@@ -88,14 +88,16 @@ class Database:
         return res
 
     def getDescriptions(self, challengeNames):
+        print('challengeNames: ', challengeNames)
 
+        insert = ','.join('?' * len(challengeNames))
         res = []
 
-        query = ''' SELECT description FROM CHALLENGES WHERE IN ?'''
+        query = ' SELECT description FROM CHALLENGES WHERE description IN (%s)' % insert
 
         cursor = self._connection.cursor()
 
-        cursor.execute(query,(challengeNames,))
+        cursor.execute(query,challengeNames)
         rows = cursor.fetchall()
         for row in rows:
             res.append(row[0]) #only one item in row (desc)
